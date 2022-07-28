@@ -1,10 +1,13 @@
 package com.bytelegend;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class FileFilter {
     public static void main(String[] args) throws IOException {
@@ -24,6 +27,40 @@ public class FileFilter {
      * the `Files.walkFileTree()` to traverse the directory.
      */
     public static List<String> filter(Path directory, String extension) throws IOException {
-        return Collections.emptyList();
+        FileExtensionVisitor fileVisitor = new FileExtensionVisitor(extension);
+        Files.walkFileTree(directory, fileVisitor);
+        return fileVisitor.getResult()
+                .stream()
+                .map(Path::toString)
+                .collect(Collectors.toList());
+
+    }
+
+    public static class FileExtensionVisitor extends SimpleFileVisitor<Path> {
+
+        private String fileExtendsion;
+        private List<Path> pathWithSpecifyExt = new ArrayList<>();
+
+        public FileExtensionVisitor(String fileExtension) {
+            fileExtendsion = fileExtension;
+        }
+
+        @Override
+        public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+            if (attrs.isDirectory()) {
+                return FileVisitResult.CONTINUE;
+            }
+
+            if (file.toString().endsWith(fileExtendsion)) {
+                pathWithSpecifyExt.add(file);
+            }
+
+            return FileVisitResult.CONTINUE;
+        }
+
+        public List<Path> getResult() {
+            return pathWithSpecifyExt;
+        }
+
     }
 }
