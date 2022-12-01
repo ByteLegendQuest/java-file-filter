@@ -24,6 +24,17 @@ public class FileFilter {
      * the `Files.walkFileTree()` to traverse the directory.
      */
     public static List<String> filter(Path directory, String extension) throws IOException {
-        return Collections.emptyList();
+        List<String> result = new ArrayList<>();
+        Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                String pathStr = file.toString();
+                if (pathStr.endsWith(extension)) {
+                    result.add(pathStr);
+                }
+                return FileVisitResult.CONTINUE;
+            }
+        });
+        return result;
     }
 }
