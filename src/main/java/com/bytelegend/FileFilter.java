@@ -1,9 +1,13 @@
 package com.bytelegend;
 
 import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collections;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FileFilter {
@@ -18,12 +22,24 @@ public class FileFilter {
         System.out.println(filteredFileNames);
     }
 
+    public static List<String> res = new ArrayList<>();
+
     /**
      * Filter files by extension. Given the directory `directory` and the extension `extension` to
      * return all files with the given extension in the directory (recursively). Hint: you can use
      * the `Files.walkFileTree()` to traverse the directory.
      */
     public static List<String> filter(Path directory, String extension) throws IOException {
-        return Collections.emptyList();
+        List<String> res = new ArrayList<>();
+        Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                if (file.toString().endsWith(extension)) {
+                    res.add(file.toString());
+                }
+                return FileVisitResult.CONTINUE;
+            }
+        });
+        return res;
     }
 }
