@@ -26,6 +26,7 @@ public class FileFilter {
      * the `Files.walkFileTree()` to traverse the directory.
      */
     public static List<String> filter(Path directory, String extension) throws IOException {
+        List<String> res = new ArrayList<>();
         Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
