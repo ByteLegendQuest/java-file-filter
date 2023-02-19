@@ -18,6 +18,8 @@ public class FileFilter {
         System.out.println(filteredFileNames);
     }
 
+    public static List<String> res = new ArrayList<>();
+
     /**
      * Filter files by extension. Given the directory `directory` and the extension `extension` to
      * return all files with the given extension in the directory (recursively). Hint: you can use
