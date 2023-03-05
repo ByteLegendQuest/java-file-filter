@@ -1,13 +1,9 @@
 package com.bytelegend;
 
 import java.io.IOException;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class FileFilter {
@@ -28,16 +24,6 @@ public class FileFilter {
      * the `Files.walkFileTree()` to traverse the directory.
      */
     public static List<String> filter(Path directory, String extension) throws IOException {
-        List<String> result = new ArrayList<>();
-        Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
-            @Override
-            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                if (file.getFileName().toString().endsWith("." + extension)) {
-                    result.add(file.toString());
-                }
-                return FileVisitResult.CONTINUE;
-            }
-        });
-        return result;
+        return Collections.emptyList();
     }
 }
