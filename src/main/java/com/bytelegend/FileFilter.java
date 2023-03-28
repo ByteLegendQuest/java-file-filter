@@ -33,7 +33,7 @@ public class FileFilter {
         ArrayList<String> result = new ArrayList<String>();
         Files.walkFileTree(directory, new SimpleFileVisitor<Path>() {
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws java.io.IOException {
-                if (file.getFileName().endsWith("." + extension)) {
+                if (file.getFileName().toString().endsWith("." + extension)) {
                     result.add(file.toString());
                 }
                 return FileVisitResult.CONTINUE;
