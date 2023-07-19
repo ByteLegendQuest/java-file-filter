@@ -24,6 +24,6 @@ public class FileFilter {
      * the `Files.walkFileTree()` to traverse the directory.
      */
     public static List<String> filter(Path directory, String extension) throws IOException {
-        return Collections.emptyList();
+        return Collections.emptyList(); 
     }
 }
